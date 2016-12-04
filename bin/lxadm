@@ -1,9 +1,7 @@
 #!/usr/bin/env perl
 
 use lib qw(); # PERL5LIB
-use FindBin;
-# PERL5LIB
-use lib "$FindBin::RealBin/../lib"; use lib "$FindBin::RealBin/../thirdparty/lib"; # LIBDIR
+use FindBin; use lib "$FindBin::RealBin/../lib"; use lib "$FindBin::RealBin/../thirdparty/lib"; # LIBDIR
 use strict;
 use warnings;
 
