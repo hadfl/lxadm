@@ -1,0 +1,336 @@
+#!/usr/bin/env perl
+
+use lib qw(); # PERL5LIB
+use FindBin;
+# PERL5LIB
+use lib "$FindBin::RealBin/../lib"; use lib "$FindBin::RealBin/../thirdparty/lib"; # LIBDIR
+use strict;
+use warnings;
+
+use Pod::Usage;
+use File::Temp qw(tempfile);
+use JSON::PP;
+use Getopt::Long qw(:config posix_default no_ignore_case);
+use LXadm::Images;
+use LXadm::Config;
+use Illumos::Zones;
+use Data::Dumper;
+
+my $lxConfig;
+
+#fix perldoc pager if not set
+$ENV{PERLDOC_PAGER} ||= '/usr/bin/less -rins' if -x '/usr/bin/less';
+
+sub editConfig {
+    my $configJSON = shift;
+
+    my ($fh, $filename) = tempfile();
+    print $fh "$configJSON\n";
+    close $fh;
+
+    my $modified = (stat $filename)[9];
+
+    my $editor = $ENV{VISUAL} || $ENV{EDITOR} || '/usr/bin/vi';
+    system($editor, $filename) and die "ERROR: executing editor\n";
+
+    open $fh, '<', $filename or die "ERROR: cannot open temp file $filename: $!\n";
+    $configJSON = do { local $/; <$fh>; };
+    close $fh;
+
+    $modified = (stat $filename)[9] != $modified;
+    unlink $filename;
+
+    return ($modified, $configJSON);
+}
+
+sub writeConfig {
+    my $lxName = shift;
+    my $uuid   = shift;
+    my $config = shift;
+    my $configJSON = JSON::PP->new->pretty->encode($config);
+
+    my $configValid = 0;
+
+    while (!$configValid){
+        local $@;
+        eval {
+            local $SIG{__DIE__};
+
+            (my $modified, $configJSON) = editConfig($configJSON);
+            $config = JSON::PP->new->decode($configJSON);
+
+            return if !$modified;
+
+            $lxConfig->writeConfig($lxName, $uuid, $config);
+        };
+        if ($@){
+            print $@;
+            print "Do you want to retry [Y/n]? ";
+            chomp(my $check = <STDIN>);
+
+            $configValid = $check =~ /^no?$/i
+        }
+        else{
+            $configValid = 1;
+        }
+    }
+}
+
+sub main {
+    my $mainOpt = shift;
+
+    # check if we are in global zone
+    Illumos::Zones->isGZ or die "ERROR: lxadm can only be run from global zone\n";
+
+    defined $mainOpt or pod2usage(1);
+
+    $lxConfig = LXadm::Config->new();
+    my $zone  = Illumos::Zones->new();
+    my $img = LXadm::Images->new();
+
+    defined $mainOpt or pod2usage(1);
+
+    for ($mainOpt) {
+        /^create$/ && do {
+            my $uuid   = shift @ARGV;
+            my $lxName = shift @ARGV;
+
+            defined $lxName && defined $uuid or pod2usage(1);
+
+            # get image details and adjust config
+            my $img = $img->downloadImage($uuid);
+            my $config = $lxConfig->getTemplate;
+            $config->{zonename} = $lxName;
+            for my $attr (@{$config->{attr}}) {
+                next if $attr->{name} ne 'kernel-version';
+
+                $attr->{value} = $img->{tags}->{kernel_version};
+                last;
+            }
+
+            $zone->zoneExists($lxName)
+                && die "ERROR: zone '$lxName' already exists. use 'edit' to change properties\n";
+
+            writeConfig($lxName, $img->{uuid}, $config);
+
+            last;
+        };
+        /^edit$/ && do {
+            my $lxName = shift @ARGV;
+            defined $lxName or pod2usage(1);
+
+            $zone->zoneExists($lxName)
+                || die "ERROR: zone '$lxName' does not exist\n";
+
+            my $config = $lxConfig->readConfig($lxName);
+            writeConfig($lxName, undef, $config);
+
+            last;
+        };
+        /^delete$/ && do {
+            my $lxName = pop @ARGV;
+            defined $lxName or pod2usage(1);
+
+            $lxConfig->removeLX($lxName);
+            last;
+        };
+        /^list-images$/ && do {
+            $img->dumpImages();
+
+            last;
+        };
+        /^start$/ && do {
+            my $lxName = shift @ARGV;
+            defined $lxName or pod2usage(1);
+
+            $zone->boot($lxName);
+            last;
+        };
+        /^stop$/ && do {
+            my $lxName = shift @ARGV;
+            defined $lxName or pod2usage(1);
+
+            $zone->shutdown($lxName);
+            last;
+        };
+        /^restart$/ && do {
+            my $lxName = shift @ARGV;
+            defined $lxName or pod2usage(1);
+
+            $zone->reboot($lxName);
+            last;
+        };
+        /^man$/ && do {
+            pod2usage(-exitstatus => 0, -verbose => 2);
+
+            last;
+        };
+        /^help$/ && do {
+            pod2usage(-exitval => 'NOEXIT');
+
+            last;
+        };
+        #main argument invalid
+        pod2usage(1);
+    }
+    return 1;
+}
+
+main(shift);
+
+1;
+
+__END__
+
+=head1 NAME
+
+lxadm - Manage Illumos LX zones.
+
+=head1 SYNOPSIS
+
+B<lxadm> I<command> [I<options...>]
+
+where 'command' is one of the following:
+
+    create <img_uuid> <lx_name>
+
+    delete <lx_name>
+
+    edit <lx_name>
+
+    list-images
+
+    start <lx_name>
+
+    stop <lx_name>
+
+    restart <lx_name>
+
+    help
+
+    man
+
+=head1 DESCRIPTION
+
+Use lxadm to create/edit your LX zones.
+
+=head2 B<create>
+
+creates a LX zone with the name B<lx_name>. Create will open an editor
+where the properties can be set. vnics which do not exist will be created.
+
+zone properties are according to I<zonecfg>.
+global properties can be set as "property" : "value" pair, single
+resources as "resource" : { } hash structure and multiple resources
+as "resource" : [ { }, ... ] array of hash structures.
+
+=head2 B<import>
+
+imports a LX zone configuration from a file.
+
+=head2 B<delete>
+
+deletes the LX zone with the name B<lx_name>.
+
+=head2 B<edit>
+
+modify the configuration of a LX zone. See the descriptions in the B<create>
+function for details.
+
+=head2 B<list-images>
+
+list all available LX images ready for download and install.
+
+=head2 B<list>
+
+lists the available LX zones with their properties. Lists details for B<lx_name>
+is given.
+
+=head2 B<state>
+
+prints the state of the LX zones.
+
+=head2 B<start>
+
+starts the LX zone B<lx_name>
+
+=head2 B<stop>
+
+stops the LX zone B<lx_name>
+
+=head2 B<restart>
+
+restarts the LX zone B<lx_name>
+
+=head1 EXAMPLES
+
+create a LX zone with the name 'lx-test' and image UUID '12345678'
+
+    lxadm create 12345678 lx-test
+
+check the LX zone properties
+
+    lxadm list lx-test
+
+copy a LX zone
+
+    lxadm list lx-test > lx-test.json
+
+    lxadm import lx-test.json
+
+basic zone setup
+
+    "zone" : {
+        "zonepath" : "/zones/lx-test",
+        "brand"    : "lx",
+        "ip-type"  : "exclusive"
+    }
+
+adding readonly zone access to a vnc password file
+
+    "zone" : {
+        ...
+        "fs" : [
+            {
+                "dir"     : "/etc/opt/kvmadm/myvncpw",
+                "special" : "/etc/opt/kvmadm/myvncpw,
+                "type"    : "lofs",
+                "options" : "[ro,nodevices]"
+            }
+        ]
+    }
+
+=head1 COPYRIGHT
+
+Copyright (c) 2016 by OETIKER+PARTNER AG. All rights reserved.
+
+=head1 LICENSE
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see L<http://www.gnu.org/licenses/>.
+
+=head1 AUTHOR
+
+S<Dominik Hassler E<lt>hadfl@cpan.orgE<gt>>
+S<Tobias Oetiker E<lt>tobi@oetiker.chE<gt>>
+
+=head1 ACKNOWLEDGMENT
+
+ Joyent: for LX zones
+ OmniTI: for upstreaming LX zones to Illumos
+
+=head1 HISTORY
+
+2016-12-02 had Initial Version
+
+=cut
