@@ -5,7 +5,7 @@ AC_PREREQ([2.59])
 AC_CONFIG_AUX_DIR(conftools)
 SCRIPT_NAME=lxadm
 AC_SUBST(SCRIPT_NAME)
-CLASS_NAME=LxAdm
+CLASS_NAME=LXadm
 AC_SUBST(CLASS_NAME)
 
 # need this to allow long path names
@@ -20,6 +20,7 @@ AC_ARG_VAR(PERL,   [Path to local perl binary])
 AC_PATH_PROG(PERL, perl, no)
 AC_PATH_PROG(CURL, curl, no)
 AC_PATH_PROG(WGET, wget, no)
+AC_PATH_PROG(POD2MAN, pod2man, no)
 
 URL_CAT="neither curl nor wget found"
 if test -x "$WGET"; then

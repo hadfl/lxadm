@@ -26,6 +26,7 @@ nytprof.out
 *.bs
 /_eumm/
 var/
+man/
 config.*
 etc/okshop.cfg
 *~

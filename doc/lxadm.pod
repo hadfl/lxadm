@@ -1,0 +1,152 @@
+=head1 NAME
+
+lxadm - Manage Illumos LX zones.
+
+=head1 SYNOPSIS
+
+B<lxadm> I<command> [I<options...>]
+
+where 'command' is one of the following:
+
+    create <img_uuid> <lx_name>
+
+    delete <lx_name>
+
+    edit <lx_name>
+
+    list-images
+
+    start <lx_name>
+
+    stop <lx_name>
+
+    restart <lx_name>
+
+    help
+
+    man
+
+=head1 DESCRIPTION
+
+Use lxadm to create/edit your LX zones.
+
+=head2 B<create>
+
+creates a LX zone with the name B<lx_name>. Create will open an editor
+where the properties can be set. vnics which do not exist will be created.
+
+zone properties are according to I<zonecfg>.
+global properties can be set as "property" : "value" pair, single
+resources as "resource" : { } hash structure and multiple resources
+as "resource" : [ { }, ... ] array of hash structures.
+
+=head2 B<import>
+
+imports a LX zone configuration from a file.
+
+=head2 B<delete>
+
+deletes the LX zone with the name B<lx_name>.
+
+=head2 B<edit>
+
+modify the configuration of a LX zone. See the descriptions in the B<create>
+function for details.
+
+=head2 B<list-images>
+
+list all available LX images ready for download and install.
+
+=head2 B<list>
+
+lists the available LX zones with their properties. Lists details for B<lx_name>
+is given.
+
+=head2 B<state>
+
+prints the state of the LX zones.
+
+=head2 B<start>
+
+starts the LX zone B<lx_name>
+
+=head2 B<stop>
+
+stops the LX zone B<lx_name>
+
+=head2 B<restart>
+
+restarts the LX zone B<lx_name>
+
+=head1 EXAMPLES
+
+create a LX zone with the name 'lx-test' and image UUID '12345678'
+
+    lxadm create 12345678 lx-test
+
+check the LX zone properties
+
+    lxadm list lx-test
+
+copy a LX zone
+
+    lxadm list lx-test > lx-test.json
+
+    lxadm import lx-test.json
+
+basic zone setup
+
+    "zone" : {
+        "zonepath" : "/zones/lx-test",
+        "brand"    : "lx",
+        "ip-type"  : "exclusive"
+    }
+
+adding readonly zone access to a vnc password file
+
+    "zone" : {
+        ...
+        "fs" : [
+            {
+                "dir"     : "/etc/opt/kvmadm/myvncpw",
+                "special" : "/etc/opt/kvmadm/myvncpw,
+                "type"    : "lofs",
+                "options" : "[ro,nodevices]"
+            }
+        ]
+    }
+
+=head1 COPYRIGHT
+
+Copyright (c) 2016 by OETIKER+PARTNER AG. All rights reserved.
+
+=head1 LICENSE
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see L<http://www.gnu.org/licenses/>.
+
+=head1 AUTHOR
+
+S<Dominik Hassler E<lt>hadfl@cpan.orgE<gt>>
+S<Tobias Oetiker E<lt>tobi@oetiker.chE<gt>>
+
+=head1 ACKNOWLEDGMENT
+
+ Joyent: for LX zones
+ OmniTI: for upstreaming LX zones to Illumos
+
+=head1 HISTORY
+
+2016-12-02 had Initial Version
+
+=cut
