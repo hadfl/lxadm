@@ -16,6 +16,7 @@
 
 #  Copyright (C) 2016 Tobias Oetiker
 
+
 VPATH = @srcdir@
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
@@ -127,7 +128,7 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(bindir)"
+am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(imandir)"
 SCRIPTS = $(dist_bin_SCRIPTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -156,6 +157,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
+DATA = $(iman_DATA)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 am__recursive_targets = \
@@ -268,6 +270,7 @@ PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PERL = @PERL@
 PERL5LIB = @PERL5LIB@
+POD2MAN = @POD2MAN@
 SCRIPT_NAME = @SCRIPT_NAME@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -319,12 +322,16 @@ top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign
 SUBDIRS = thirdparty lib
 BIN = bin/$(SCRIPT_NAME)
+MAN = man/$(SCRIPT_NAME).1
+POD = doc/$(SCRIPT_NAME).pod
 
 #PERLTESTS := $(shell find t -name "*.t")
 THIRDPARTY_DIR := $(shell pwd)/thirdparty
-EXTRA_DIST = VERSION PERL_MODULES COPYRIGHT LICENSE CHANGES AUTHORS bootstrap $(wildcard t/*.t) $(BIN) $(PERLTESTS)
+EXTRA_DIST = VERSION PERL_MODULES COPYRIGHT LICENSE CHANGES AUTHORS bootstrap $(wildcard t/*.t) $(BIN) $(PERLTESTS) $(MAN) $(POD)
 YEAR := $(shell date +%Y)
 DATE := $(shell date +%Y-%m-%d)
+imandir = $(mandir)/man1
+iman_DATA = $(MAN)
 dist_bin_SCRIPTS = $(BIN)
 all: all-recursive
 
@@ -397,6 +404,27 @@ uninstall-dist_binSCRIPTS:
 	files=`for p in $$list; do echo "$$p"; done | \
 	       sed -e 's,.*/,,;$(transform)'`; \
 	dir='$(DESTDIR)$(bindir)'; $(am__uninstall_files_from_dir)
+install-imanDATA: $(iman_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(iman_DATA)'; test -n "$(imandir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(imandir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(imandir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(imandir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(imandir)" || exit $$?; \
+	done
+
+uninstall-imanDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(iman_DATA)'; test -n "$(imandir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(imandir)'; $(am__uninstall_files_from_dir)
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run 'make' without going through this Makefile.
@@ -697,10 +725,10 @@ distcleancheck: distclean
 	       exit 1; } >&2
 check-am: all-am
 check: check-recursive
-all-am: Makefile $(SCRIPTS)
+all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(bindir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(imandir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -754,7 +782,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am:
+install-data-am: install-imanDATA
 
 install-dvi: install-dvi-recursive
 
@@ -801,7 +829,7 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-dist_binSCRIPTS
+uninstall-am: uninstall-dist_binSCRIPTS uninstall-imanDATA
 
 .MAKE: $(am__recursive_targets) install-am install-exec-am \
 	install-strip
@@ -815,13 +843,13 @@ uninstall-am: uninstall-dist_binSCRIPTS
 	html-am info info-am install install-am install-data \
 	install-data-am install-dist_binSCRIPTS install-dvi \
 	install-dvi-am install-exec install-exec-am install-exec-hook \
-	install-html install-html-am install-info install-info-am \
-	install-man install-pdf install-pdf-am install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
-	installdirs installdirs-am maintainer-clean \
+	install-html install-html-am install-imanDATA install-info \
+	install-info-am install-man install-pdf install-pdf-am \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs installdirs-am maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
 	pdf-am ps ps-am tags tags-am uninstall uninstall-am \
-	uninstall-dist_binSCRIPTS
+	uninstall-dist_binSCRIPTS uninstall-imanDATA
 
 .PRECIOUS: Makefile
 
@@ -829,7 +857,13 @@ uninstall-am: uninstall-dist_binSCRIPTS
 README COPYRIGHT : VERSION
 	$(PERL) -i -p -e 's/(#VERSION#|\d+\.\d+\.\d+\S+)/$(PACKAGE_VERSION)/g;s/(#YEAR#|20[1-4]\d)/$(YEAR)/g;s/(#DATE#|20[1-9]\d-[01]\d-[0-3]\d)/$(DATE)/g;' $@
 
-dist-hook: thirdparty/CPAN/touch
+doc/%.pod: bin/% VERSION
+	$(AM_V_GEN)mkdir -p doc;grep -A100000 '=head1 NAME' $< > $@
+
+man/%.1: bin/% VERSION
+	$(AM_V_GEN)mkdir -p man; test $(POD2MAN) = "no" || $(POD2MAN) --release=$(VERSION) --center=$(PACKAGE_NAME) $<  > $@
+
+dist-hook: thirdparty
 	$(PERL) -i -p -e 's/^our\s+\$$VERSION\s*=\s*".+?";/our \$$VERSION = "$(PACKAGE_VERSION)";/;'  $(distdir)/lib/$(CLASS_NAME)/*.pm
 
 install-exec-hook:
@@ -840,15 +874,6 @@ install-exec-hook:
 
 #test:
 #	$(PERL) "-MExtUtils::Command::MM" "-e" "test_harness(0, 'lib','thirdparty/lib/perl5')" t/*.t
-
-release:
-	./bootstrap
-	git commit -m 'prep release $(VERSION)' -a
-	git tag v$(PACKAGE_VERSION)
-	git push
-	git push --tags
-	$(MAKE) dist
-	scp $(PACKAGE)-$(PACKAGE_VERSION).tar.gz oepdown@james:public_html/hin
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
