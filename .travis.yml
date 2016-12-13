@@ -13,6 +13,6 @@ install:
   - true
 
 script:
-  - ./bootstrap.sh
+  - ./bootstrap
   - ./configure --prefix=$HOME/lxadm
   - make install
