@@ -10,11 +10,17 @@ where 'command' is one of the following:
 
     create <img_uuid> <lx_name>
 
-    delete <lx_name>
+    import <img_uuid> <filename>
+
+    delete [--purge=vnic] <lx_name>
 
     edit <lx_name>
 
+    list [lx_name]
+
     list-images
+
+    refresh
 
     start <lx_name>
 
@@ -53,18 +59,18 @@ deletes the LX zone with the name B<lx_name>.
 modify the configuration of a LX zone. See the descriptions in the B<create>
 function for details.
 
-=head2 B<list-images>
-
-list all available LX images ready for download and install.
-
 =head2 B<list>
 
 lists the available LX zones with their properties. Lists details for B<lx_name>
 is given.
 
-=head2 B<state>
+=head2 B<list-images>
 
-prints the state of the LX zones.
+list all available LX images ready for download and install.
+
+=head2 B<refresh>
+
+forces image index refresh.
 
 =head2 B<start>
 
@@ -96,22 +102,22 @@ copy a LX zone
 
 basic zone setup
 
-    "zone" : {
+    {
         "zonepath" : "/zones/lx-test",
         "brand"    : "lx",
         "ip-type"  : "exclusive"
     }
 
-adding readonly zone access to a vnc password file
+mounting a filesystem to the LX zone
 
-    "zone" : {
+    {
         ...
         "fs" : [
             {
-                "dir"     : "/etc/opt/kvmadm/myvncpw",
-                "special" : "/etc/opt/kvmadm/myvncpw,
+                "dir"     : "/opt",
+                "special" : "/tank/lx-test/opt,
                 "type"    : "lofs",
-                "options" : "[ro,nodevices]"
+                "options" : "[nodevices]"
             }
         ]
     }

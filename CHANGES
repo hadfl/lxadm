@@ -1,2 +1,55 @@
-0.0.0 2016-12-05  Dominik Hassler (hadfl@cpan.org)
-- added autoconf (Tobi Oetiker)
+commit cef17cf5a3106a1f65c68e964f982e046777eb10
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Tue Dec 13 15:11:37 2016 +0100
+
+    - readme
+
+commit 15aea698be4b760f845aa49798e25b8209c5d858
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Tue Dec 13 14:56:40 2016 +0100
+
+    - ready for first beta release
+
+commit 8e79ee318013169ca4555b16083d3176b4171e1f
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Mon Dec 5 01:59:00 2016 +0100
+
+    - perl lib dir
+
+commit b8b7fe6b7645ac58d3fed0eb012a1d189cef19e4
+Author: Tobias Oetiker <tobi@oetiker.ch>
+Date:   Mon Dec 5 01:20:22 2016 +0100
+
+    Auto update (#2)
+    
+    fix automake
+
+commit e4b3e04e831df8162df4bab9d46f4bd0e56be500
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Mon Dec 5 01:13:07 2016 +0100
+
+    ready for release 0.1.0-rc1
+
+commit 00a04abf5bf0530969d1de5c4beef49bf298e02b
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Mon Dec 5 00:52:33 2016 +0100
+
+    - authors
+
+commit e602980138bacf27eefb84777cacc40434d45200
+Author: Tobias Oetiker <tobi@oetiker.ch>
+Date:   Mon Dec 5 00:39:29 2016 +0100
+
+    autoconf ahoi
+
+commit 6cb5428eb9f2953aa02810e09b25488412289187
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Sun Dec 4 23:20:37 2016 +0100
+
+    - wip
+
+commit d4b7bb6476a67f07ecd23dc80499426c856610e2
+Author: Dominik Hassler <hadfl@users.noreply.github.com>
+Date:   Fri Dec 2 14:54:33 2016 +0100
+
+    Initial commit
