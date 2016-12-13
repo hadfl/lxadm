@@ -3,6 +3,7 @@ lxadm 0.1.0
 Manage Illumos LX zones.
 
 [![Build Status](https://travis-ci.org/hadfl/lxadm.svg?branch=master)](https://travis-ci.org/hadfl/lxadm)
+[![Gitter](https://badges.gitter.im/hadfl/lxadm.svg)](https://gitter.im/hadfl/lxadm?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge)
 
 LXadm takes care of setting up LX zones on illumos derived operating systems.
 
