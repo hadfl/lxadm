@@ -3,9 +3,8 @@ package LXadm::Images;
 use strict;
 use warnings;
 
-use JSON::PP;
 use Data::Dumper;
-
+use JSON::PP;
 use File::Path qw(make_path);
 use File::Basename qw(dirname);
 use File::stat;
@@ -75,7 +74,7 @@ my $getImageByUUID = sub {
 
     my $imgs = [ grep { $_->{uuid} =~ /$uuid/ } @{$self->listImages} ];
 
-    @$imgs < 1 and die "ERROR: image uuid containing '$uuid' not found.\n";
+    @$imgs < 1 and die "ERROR: image UUID containing '$uuid' not found.\n";
     @$imgs > 1 and die "ERROR: more than one image uuid contains '$uuid'.\n";
 
     return $imgs->[0];
@@ -98,7 +97,6 @@ my $checkChecksum = sub {
     if (Digest::SHA->new('sha1')->addfile("$CACHE_PATH/$fileName")->hexdigest
         eq $checksum) {
 
-        print "checksum ok...\n";
         return 1;
     }
     print "checksum not ok...\n";
@@ -130,7 +128,8 @@ my $downloadFile = sub {
 
     # check checksum if sha1 option is set
     exists $opts->{sha1} && do {
-        $checkChecksum->($fileName, $opts->{sha1}) || $getFile->($fileName, $url);
+        return if $checkChecksum->($fileName, $opts->{sha1});
+        $getFile->($fileName, $url);
         $checkChecksum->($fileName, $opts->{sha1}) || die "ERROR: chechsum mismatch for downloaded file\n";
     };
 };
@@ -176,7 +175,8 @@ sub listImages {
 }
 
 sub dumpImages {
-    my $self = shift;
+    my $self     = shift;
+    my $uuid_len = shift;
 
     my $imgs = $self->listImages;
 
@@ -209,4 +209,47 @@ sub downloadImage {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+LXadm::Images - lxadm images class
+
+=head1 SYNOPSIS
+
+use LXadm::Images;
+
+=head1 DESCRIPTION
+
+downloads and verifies lx zone images
+
+=head1 COPYRIGHT
+
+Copyright (c) 2016 by OETIKER+PARTNER AG. All rights reserved.
+
+=head1 LICENSE
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see L<http://www.gnu.org/licenses/>.
+
+=head1 AUTHOR
+
+S<Dominik Hassler E<lt>hadfl@cpan.orgE<gt>>,
+
+=head1 HISTORY
+
+2016-12-13 had Initial Version
+
+=cut
 
