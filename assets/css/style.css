@@ -112,7 +112,7 @@ a:hover {
 
 @media (min-width: 750px) {
     .thumbnail.feature {
-        min-height: 500px;
+        min-height: 300px;
     }
 }
 
