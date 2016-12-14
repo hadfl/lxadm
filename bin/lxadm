@@ -288,7 +288,7 @@ function for details.
 =head2 B<list>
 
 lists the available LX zones with their properties. Lists details for B<lx_name>
-is given.
+if given.
 
 =head2 B<list-images>
 
@@ -324,7 +324,7 @@ copy a LX zone
 
     lxadm list lx-test > lx-test.json
 
-    lxadm import lx-test.json
+    lxadm import 12345678 lx-test.json
 
 basic zone setup
 
