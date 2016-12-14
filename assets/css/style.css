@@ -24,9 +24,9 @@ h2 > a:not([href]) {
 
 #banner {
 /*    background-image: url(../images/IMG_0172.jpg); */
-    background-image: url(../images/256A6787.jpg); 
+    background-image: url(../images/trainjard.jpg); 
 
-    background-position: center;
+    background-position: 50% 60%;
     background-size: cover;
     color: #fff;
     padding-top: 10ex;
@@ -53,6 +53,18 @@ h2 > a:not([href]) {
         height: 41px;
     }
 }
+
+h2, h2 > a, h2 > a:hover {
+    color: #000;
+}
+
+a {
+    color: #888;
+}
+a:hover {
+    color: #aaa;
+}
+
 
 #banner h1 {
     font-size: 310%;
@@ -82,12 +94,12 @@ h2 > a:not([href]) {
 
 .thumbnail.feature {
     border-radius: 0px;
-    background-color: #053B70;
+    background-color: #000;
     color: #fff;
 }
 
 .thumbnail.feature:hover, .thumbnail.feature:active {   
-   background-color: #054F98;
+   background-color: #222;
 }
 
 .thumbnail.feature:hover .icon, .thumbnail.feature:active .icon {
