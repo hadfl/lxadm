@@ -25,8 +25,7 @@ h2 > a:not([href]) {
 #banner {
 /*    background-image: url(../images/IMG_0172.jpg); */
     background-image: url(../images/trainjard.jpg); 
-
-    background-position: 50% 60%;
+    background-position: 50% 40%;
     background-size: cover;
     color: #fff;
     padding-top: 10ex;
@@ -82,12 +81,15 @@ a:hover {
 #banner .claim {
     font-size: 170%;
     margin-bottom: 2ex;
-    text-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 1);
+    background-color: rgba(0,0,0,0.2);
+    padding: 0.5ex;
+    max-width: 35ex;
 }
 
 @media (min-width: 750px) {
     #banner .claim {
-        font-size: 300%;
+        font-size: 270%;
         margin-bottom: 2ex;
     }
 }
