@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Data::Dumper;
-use JSON::PP;
+use JSON;
 use File::Path qw(make_path);
 use File::Basename qw(dirname);
 use File::stat;
@@ -155,7 +155,7 @@ sub fetchImages {
 
     $downloadFile->('index.json', $IMGURL, (max_age => ($force ? -1 : $MAX_AGE)));
     open my $index, '<', "$CACHE_PATH/index.json" or die "ERROR: cannot open 'index.json': $!\n";
-    my $imgs = JSON::PP->new->decode(do { local $/; <$index>; });
+    my $imgs = JSON->new->decode(do { local $/; <$index>; });
     ref $imgs eq 'ARRAY' or die "ERROR: 'index.json' invalid\n";
 
     # filter so we only get lx-datasets
