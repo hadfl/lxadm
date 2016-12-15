@@ -341,7 +341,7 @@ mounting a filesystem to the LX zone
         "fs" : [
             {
                 "dir"     : "/opt",
-                "special" : "/tank/lx-test/opt,
+                "special" : "/tank/lx-test/opt",
                 "type"    : "lofs",
                 "options" : "[nodevices]"
             }
