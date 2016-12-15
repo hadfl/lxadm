@@ -1,3 +1,45 @@
+commit c214e09efa01b34f128c3c2106bda8ce3072c5a7
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Thu Dec 15 14:50:43 2016 +0100
+
+    - fix dependencies
+
+commit 82e1d6335b998e46c8d44852238e111e84fdca0c
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Wed Dec 14 16:31:22 2016 +0100
+
+    - docu fixes
+
+commit 690fc6b53693602e65142f73d7781cd14b5197d3
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Wed Dec 14 15:12:39 2016 +0100
+
+    - gitter again
+
+commit 3dfe2d424d259638e7f79f462604ffc38ad746d1
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Wed Dec 14 14:02:30 2016 +0100
+
+    - remove gitter for now
+
+commit eb02abd836e5781d9c8a1bd380e6ca81205e9b03
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Tue Dec 13 19:39:36 2016 +0100
+
+    - add gitter
+
+commit 69c6033c773c9ebe8a4bf39d2303f412f5312bb9
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Tue Dec 13 16:56:53 2016 +0100
+
+    - fix travis
+
+commit d31cbd333c90969cb4faa3c466735731ef92bb20
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Tue Dec 13 16:50:14 2016 +0100
+
+    ready for 0.1.0
+
 commit cef17cf5a3106a1f65c68e964f982e046777eb10
 Author: Dominik Hassler <hadfl@cpan.org>
 Date:   Tue Dec 13 15:11:37 2016 +0100
