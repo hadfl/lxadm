@@ -196,6 +196,8 @@ sub readConfig {
     my $lxName = shift;
 
     my $config = $self->{zone}->getZoneProperties($lxName);
+    # check if we are working on a lx zone
+    $config->{brand} eq 'lx' or die "ERROR: zone '$lxName' is not a lx zone\n";
     $self->$decodeRes($config);
 
     return $config;
