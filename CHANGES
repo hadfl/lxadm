@@ -1,3 +1,45 @@
+commit 30dacac13a58814f53b4050601e941a78cca57e0
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Fri Dec 16 16:32:52 2016 +0100
+
+    - use Illumos::Zones 0.1.4
+
+commit 928870755508610bba60bf11186929a175a5968a
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Fri Dec 16 16:07:17 2016 +0100
+
+    - proper rctl handling by aliases
+
+commit 5f2182ae720cdab9263f35d309e079e6c61da3f8
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Fri Dec 16 15:03:09 2016 +0100
+
+    - check if zone is a lx zone
+
+commit d803069818b0a5e9b523d3501453c70efde3872d
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Thu Dec 15 19:25:54 2016 +0100
+
+    - typos
+
+commit aee02ac54616bbf1a18c5359352dab3f841347cf
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Thu Dec 15 15:59:56 2016 +0100
+
+    - git attributes, perl 5.22
+
+commit 85fe41c4ac9cd3952a468ee27cb7917a593f8128
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Thu Dec 15 15:48:15 2016 +0100
+
+    - gitattributes added
+
+commit 94c16cffbef933c943feac3e28795e8a08bf8727
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Thu Dec 15 15:32:51 2016 +0100
+
+    ready for 0.1.1
+
 commit c214e09efa01b34f128c3c2106bda8ce3072c5a7
 Author: Dominik Hassler <hadfl@cpan.org>
 Date:   Thu Dec 15 14:50:43 2016 +0100
