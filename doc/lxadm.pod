@@ -32,6 +32,8 @@ where 'command' is one of the following:
 
     man
 
+    version
+
 =head1 DESCRIPTION
 
 Use lxadm to create/edit your LX zones.
@@ -62,7 +64,7 @@ function for details.
 =head2 B<list>
 
 lists the available LX zones with their properties. Lists details for B<lx_name>
-is given.
+if given.
 
 =head2 B<list-images>
 
@@ -98,7 +100,7 @@ copy a LX zone
 
     lxadm list lx-test > lx-test.json
 
-    lxadm import lx-test.json
+    lxadm import 12345678 lx-test.json
 
 basic zone setup
 
@@ -115,7 +117,7 @@ mounting a filesystem to the LX zone
         "fs" : [
             {
                 "dir"     : "/opt",
-                "special" : "/tank/lx-test/opt,
+                "special" : "/tank/lx-test/opt",
                 "type"    : "lofs",
                 "options" : "[nodevices]"
             }

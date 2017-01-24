@@ -1,3 +1,15 @@
+commit 67141922732dc671e29502a9aadab40108f79269
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Tue Jan 24 09:52:03 2017 +0100
+
+    - remove empty attr resources
+
+commit b991ba5dc9b462bc9d345baed424e149a7e479dc
+Author: Dominik Hassler <hadfl@cpan.org>
+Date:   Fri Dec 16 17:03:50 2016 +0100
+
+    ready for 0.1.2
+
 commit 30dacac13a58814f53b4050601e941a78cca57e0
 Author: Dominik Hassler <hadfl@cpan.org>
 Date:   Fri Dec 16 16:32:52 2016 +0100

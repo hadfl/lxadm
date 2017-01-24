@@ -1,4 +1,4 @@
-lxadm 0.1.2
+lxadm 0.1.3
 ============
 Manage Illumos LX zones.
 
@@ -13,10 +13,10 @@ Setup
 LXadm comes as a prebuilt pure perl package, so it should install out of the box on any machine with a current perl installation.
 
 ```sh
-wget https://github.com/hadfl/lxadm/releases/download/v0.1.2/lxadm-0.1.2.tar.gz
-tar zxvf lxadm-0.1.2.tar.gz
-cd lxadm-0.1.2
-./configure --prefix=/opt/lxadm-0.1.2 
+wget https://github.com/hadfl/lxadm/releases/download/v0.1.3/lxadm-0.1.3.tar.gz
+tar zxvf lxadm-0.1.3.tar.gz
+cd lxadm-0.1.3
+./configure --prefix=/opt/lxadm-0.1.3 
 ```
 
 Now you can run
@@ -37,4 +37,4 @@ And if you have a contribution, please send a pull request.
 Enjoy!
 
 Dominik Hassler & Tobi Oetiker
-2016-12-16
+2017-01-24

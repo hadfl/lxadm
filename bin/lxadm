@@ -17,7 +17,7 @@ use LXadm::Config;
 use Illumos::Zones;
 use Data::Dumper;
 
-my $VERSION = '0.1.2'; # VERSION
+my $VERSION = '0.dev'; # VERSION
 
 my %delPurgeMap = map { $_ => 1 } qw(vnic);
 my $lxConfig;
