@@ -9,12 +9,15 @@ use warnings;
 
 use Pod::Usage;
 use File::Temp qw(tempfile);
+use File::Basename qw(basename);
 use JSON;
 use Getopt::Long qw(:config posix_default no_ignore_case);
 use LXadm::Images;
 use LXadm::Config;
 use Illumos::Zones;
 use Data::Dumper;
+
+my $VERSION = '0.1.2'; # VERSION
 
 my %delPurgeMap = map { $_ => 1 } qw(vnic);
 my $lxConfig;
@@ -212,6 +215,11 @@ sub main {
 
             last;
         };
+        /^version$/ && do {
+            print basename($0) . " $VERSION\n";
+
+            last;
+        };
         #main argument invalid
         pod2usage(1);
     }
@@ -257,6 +265,8 @@ where 'command' is one of the following:
     help
 
     man
+
+    version
 
 =head1 DESCRIPTION
 

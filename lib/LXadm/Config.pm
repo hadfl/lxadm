@@ -113,6 +113,9 @@ my $encodeRes = sub {
             type => 'string',
         );
 
+        # don't process empty res
+        next if !$cfg->{$res};
+
         $elem{value} = ref $cfg->{$res} eq 'ARRAY' ? join (',', @{$cfg->{$res}})
                      : $cfg->{$res};
 
