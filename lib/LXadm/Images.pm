@@ -226,7 +226,7 @@ downloads and verifies lx zone images
 
 =head1 COPYRIGHT
 
-Copyright (c) 2016 by OETIKER+PARTNER AG. All rights reserved.
+Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 
 =head1 LICENSE
 
