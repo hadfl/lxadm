@@ -126,7 +126,7 @@ mounting a filesystem to the LX zone
 
 =head1 COPYRIGHT
 
-Copyright (c) 2016 by OETIKER+PARTNER AG. All rights reserved.
+Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 
 =head1 LICENSE
 
@@ -151,7 +151,7 @@ S<Tobias Oetiker E<lt>tobi@oetiker.chE<gt>>
 =head1 ACKNOWLEDGMENT
 
  Joyent: for LX zones
- OmniTI: for upstreaming LX zones to Illumos
+ OmniTI: for porting LX zones to OmniOS
 
 =head1 HISTORY
 
