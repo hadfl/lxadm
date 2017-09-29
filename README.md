@@ -1,16 +1,16 @@
 lxadm 0.1.4
 ============
-Manage Illumos LX zones.
+Manage illumos LX zones.
 
 [![Build Status](https://travis-ci.org/hadfl/lxadm.svg?branch=master)](https://travis-ci.org/hadfl/lxadm)
-[![Gitter](https://badges.gitter.im/hadfl/lxadm.svg)](https://gitter.im/lxadm/main?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge)
 
-LXadm takes care of setting up LX zones on Illumos derived operating systems.
+`lxadm` takes care of setting up LX zones on illumos derived operating systems.
 
 Setup
 -----
 
-LXadm comes as a prebuilt pure perl package, so it should install out of the box on any machine with a current perl installation.
+`lxadm` comes as a prebuilt pure perl package, so it should install out of
+the box on any machine with a current perl installation.
 
 ```sh
 wget https://github.com/hadfl/lxadm/releases/download/v0.1.4/lxadm-0.1.4.tar.gz
@@ -22,15 +22,15 @@ cd lxadm-0.1.4
 Now you can run
 
 ```sh
-make
-make install
+gmake
+gmake install
 ```
 
 Check the [man page](doc/lxadm.pod) for information about how to use lxadm.
 
 Support and Contributions
 -------------------------
-If you find a problem with lxadm, please open an Issue on GitHub.
+If you find a problem with `lxadm`, please open an Issue on GitHub.
 
 And if you have a contribution, please send a pull request.
 
