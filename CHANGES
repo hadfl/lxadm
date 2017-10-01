@@ -1,3 +1,27 @@
+commit 09a5bbdc1f6bc0445b83d5f940d46f767041bef9
+Author: Dominik Hassler <hadfl@omniosce.org>
+Date:   Sun Oct 1 16:55:34 2017 +0200
+
+    remove lx brand check
+
+commit a324f641eeb18d906fd324ae4f5f7bf890dbf2ad
+Author: Dominik Hassler <hadfl@omniosce.org>
+Date:   Sun Oct 1 16:45:03 2017 +0200
+
+    build now allows setting of var data dir
+
+commit 561cc65baf33f6ac155c21334f7cc34926d3f9d8
+Author: Dominik Hassler <hadfl@omniosce.org>
+Date:   Fri Sep 29 15:34:17 2017 +0200
+
+    fix readme
+
+commit 4f0908401444ee51cd24cb8b13ef4e2fc8ee499a
+Author: Dominik Hassler <hadfl@omniosce.org>
+Date:   Sat Aug 19 14:15:37 2017 +0200
+
+    ready for 0.1.4
+
 commit e83702a49a026140850bfbc99e84178f1821e9db
 Author: Dominik Hassler <hadfl@omniosce.org>
 Date:   Sat Aug 19 14:04:31 2017 +0200
