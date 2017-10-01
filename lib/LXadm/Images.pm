@@ -54,11 +54,6 @@ my @DUMPSET    = (
 my $images = [];
 
 # private methods
-my $checkLXpkg = sub {
-    my $cmd = "$PKG list system/zones/brand/lx > /dev/null";
-    system ($cmd) and die "ERROR: LX brand not installed. run 'pkg install system/zones/brand/lx'\n";
-};
-
 my $getHashValue = sub {
     my $value = shift;
     my $item  = shift;
@@ -138,8 +133,6 @@ my $downloadFile = sub {
 sub new {
     my $class = shift;
     my $self = { @_ };
-
-    $checkLXpkg->();
 
     return bless $self, $class;
 }
