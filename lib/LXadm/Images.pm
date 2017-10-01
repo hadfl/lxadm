@@ -19,7 +19,7 @@ my $IMGURL     = 'https://images.joyent.com/images';
 my $MAX_AGE    = 24 * 60 * 60;
 my $CURL       = '/usr/bin/curl';
 my $PKG        = '/usr/bin/pkg';
-my $CACHE_PATH = "/var$BASEDIR/cache";
+my $CACHE_PATH = "/var$BASEDIR/cache"; # CACHEPATH
 my @DUMPSET    = (
     {
         name  => 'UUID',
