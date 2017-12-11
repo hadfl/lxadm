@@ -8,8 +8,6 @@ use Data::Processor;
 use LXadm::Images;
 use LXadm::Utils;
 
-use Data::Dumper;
-
 # constants/programs
 my $TEMPLATE = {
     zonename  => '',
@@ -213,7 +211,7 @@ sub listLX {
     my $self   = shift;
     my $lxName = shift;
 
-    my $lxZones = $lxName ? [ $lxName ] : [ map { $_->{zonename} } grep { $_->{brand} eq 'lx' } @{$self->{zone}->listZones} ];
+    my $lxZones = $lxName ? [ $lxName ] : [ map { $_->{zonename} } @{$self->{zone}->listZones({ brandFilter => qr/^lx$/ })} ];
 
     # save a copy of $_ in $key as $_ gets modified in function
     return { map { my $key = $_; $key => $self->readConfig($_) } @$lxZones };
