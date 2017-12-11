@@ -1,4 +1,4 @@
-lxadm 0.1.5
+lxadm 0.1.6
 ============
 Manage illumos LX zones.
 
@@ -13,10 +13,10 @@ Setup
 the box on any machine with a current perl installation.
 
 ```sh
-wget https://github.com/hadfl/lxadm/releases/download/v0.1.5/lxadm-0.1.5.tar.gz
-tar zxvf lxadm-0.1.5.tar.gz
-cd lxadm-0.1.5
-./configure --prefix=/opt/lxadm-0.1.5 
+wget https://github.com/hadfl/lxadm/releases/download/v0.1.6/lxadm-0.1.6.tar.gz
+tar zxvf lxadm-0.1.6.tar.gz
+cd lxadm-0.1.6
+./configure --prefix=/opt/lxadm-0.1.6 
 ```
 
 Now you can run
@@ -37,4 +37,4 @@ And if you have a contribution, please send a pull request.
 Enjoy!
 
 Dominik Hassler & Tobi Oetiker
-2017-10-01
+2017-12-11

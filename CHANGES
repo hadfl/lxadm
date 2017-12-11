@@ -1,3 +1,15 @@
+commit 139c2408d24263afcf404c0d9913febe577516ad
+Author: Dominik Hassler <hadfl@omniosce.org>
+Date:   Mon Dec 11 15:31:44 2017 +0100
+
+    lx brand filter
+
+commit 9a492c76282758f9f9c221b6c360943c3972ba4e
+Author: Dominik Hassler <hadfl@omniosce.org>
+Date:   Sun Oct 1 17:06:44 2017 +0200
+
+    ready for 0.1.5
+
 commit 09a5bbdc1f6bc0445b83d5f940d46f767041bef9
 Author: Dominik Hassler <hadfl@omniosce.org>
 Date:   Sun Oct 1 16:55:34 2017 +0200
