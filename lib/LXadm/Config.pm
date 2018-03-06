@@ -198,6 +198,8 @@ sub readConfig {
     my $lxName = shift;
 
     my $config = $self->{zone}->getZoneProperties($lxName);
+    %$config or die "ERROR: zone '$lxName' does not exist\n";
+
     # check if we are working on a lx zone
     $config->{brand} eq 'lx' or die "ERROR: zone '$lxName' is not a lx zone\n";
     # remove 'rctl' as they are set by aliases
