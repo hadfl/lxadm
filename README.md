@@ -4,6 +4,12 @@ Manage illumos LX zones.
 
 [![Build Status](https://travis-ci.org/hadfl/lxadm.svg?branch=master)](https://travis-ci.org/hadfl/lxadm)
 
+---
+
+## This project is unmaintained and has been superseded by [zadm](https://github.com/omniosorg/zadm).
+
+---
+
 `lxadm` takes care of setting up LX zones on illumos derived operating systems.
 
 Setup
