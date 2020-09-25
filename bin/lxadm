@@ -173,6 +173,12 @@ sub main {
             print JSON->new->pretty->encode($lxConfig->listLX($lxName));
             last;
         };
+        /^list-zones$/ && do {
+            my $lxName = shift @ARGV;
+            print JSON->new->pretty->encode($lxConfig->listZones);
+            last;
+        };
+ 
         /^list-images$/ && do {
             $img->dumpImages();
 
